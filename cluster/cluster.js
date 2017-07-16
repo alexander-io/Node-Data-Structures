@@ -16,21 +16,21 @@
    let clustr = {}
 
 
+   // this function is called by nodes in the cluster, they can pass messages while serving requests
+   // in this case, i passed the ip and the pid of the cluster process to make a tree/dictionary of clusters/ips/timestamps
    let messageHandler = function(message) {
      if (message.cmd && message.cmd === 'notifyRequest') {
        num_requests += 1
      }
 
-     if (message.ip && message.pid) {
 
+     if (message.ip && message.pid) {
+       // create a dict at the pid index
        if (!clustr[message.pid]) {
           clustr[message.pid] = {}
        }
 
-      //  clustr[message.pid].push(lst_of_ips)
-      // clustr[message.pid][message.ip] = (new Date()).toLocaleTimeString('minute')
-
-      clustr[message.pid][(new Date()).toLocaleTimeString('minute')] = message.ip 
+      clustr[message.pid][(new Date()).toLocaleTimeString('minute')] = message.ip
 
 
       // lst_of_ips[message.ip] = (new Date()).toLocaleTimeString()
